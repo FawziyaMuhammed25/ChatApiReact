@@ -1,4 +1,4 @@
-import React, { useContext , , useState  , useEffect  } from "react";
+import React, { useContext, useState  , useEffect } from "react";
 import './Main.css'
 import { assets } from "../../assets/assets";
 import { Context } from "../../contaxt/contaxt";
@@ -6,7 +6,8 @@ import { Context } from "../../contaxt/contaxt";
 const Main =() =>{
      
   
-    const { onSend , resentPrompt ,showResult , loading , resultData, setInput , input , setresentPrompt}  = useContext(Context);
+    const { onSend  ,resentPrompt ,showResult , loading , resultData, setInput , input,  setresentPrompt }  = useContext(Context);
+   
     const [suggestions, setSuggestions] = useState([])
     const allSuggestions =[
         { 
@@ -48,7 +49,8 @@ const Main =() =>{
      
        await onSend(prompt)
     }
-  
+
+
     return ( 
         <div className="main">
            <div className="nav">
@@ -64,16 +66,16 @@ const Main =() =>{
                     </p>
                     <p>How can I help you today?</p>
                 </div>
-                   <div className="cards">
-                     {suggestions.map((item, index) => (
-                    
-                    <div className="card" onClick={() =>{loadPrompt(item.text) }}  >
-                        <p>{item.text}</p>
-                        { item.icon }
-                    </div>
-                       ))}
-                       
-                   </div>
+                <div className="cards">
+                {suggestions.map((item, index) => (
+               
+               <div className="card" onClick={() =>{loadPrompt(item.text) }}  >
+                   <p>{item.text}</p>
+                   { item.icon }
+               </div>
+                  ))}
+                  
+                </div>
                 </>
                 :<div className="result">
                          <div className="result-title">
@@ -104,7 +106,7 @@ const Main =() =>{
                         <div>
                             <img src={assets.gallery_icon} alt="" />
                             <img src={assets.mic_icon} alt="" />
-                           {input ? <img src={assets.send_icon}  onClick={() => onSend()} alt="" /> : null}
+                           {input ? <img src={assets.send_icon}  onClick={() => onSend()} alt=""  /> : null}
                         </div>
                     </div>
                     <p className="bottom-info">
