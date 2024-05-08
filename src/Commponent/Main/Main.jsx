@@ -7,8 +7,45 @@ const Main =() =>{
      
   
     const { onSend , resentPrompt ,showResult , loading , resultData, setInput , input , setresentPrompt}  = useContext(Context);
-    const loadPrompt = async(prompt) =>{
+    const [suggestions, setSuggestions] = useState([])
+    const allSuggestions =[
+        { 
+            text:" Suggest beautiful places to see on an upcoming road trip",
+           icon :  <img src={assets.compass_icon} alt="" />
+        },
+    
+         { 
+            text :"Briefly summarize this concept: urban planning",
+            icon : <img src={assets.bulbe_icon} alt="" />
+         },
+         { 
+            text:"Brainstorm team bonding activities for our work retreat",
+            icon :  <img src={assets.message_icon} alt="" />
+        
+        },
+         {
+            text : "Tell me about React js and React native",
+             icon : <img src={assets.code_icon} alt="" />
+        } 
+    ]
+   
+    const selectRandomSuggestions = () => {
+        const shuffledSuggestions = allSuggestions.sort(() => 0.5 - Math.random());
+        const selected = shuffledSuggestions.slice(0, 4);
+        setSuggestions(selected);
+       
+      };
+   
+    
+      useEffect(() => {    // to show Suggestions 
+         
+        selectRandomSuggestions();
+        
+      }, []);
+
+      const loadPrompt = async(prompt) =>{
         setresentPrompt(prompt)
+     
        await onSend(prompt)
     }
   
@@ -27,29 +64,16 @@ const Main =() =>{
                     </p>
                     <p>How can I help you today?</p>
                 </div>
-                <div className="cards">
-              
-                    <div className="card">
-                     
-                        <p onClick={() => loadPrompt()}> 
-                           
-                            Suggest beautiful places to see on an upcoming road trip
-                         </p>                
-                        <img src={assets.compass_icon} alt="" />
+                   <div className="cards">
+                     {suggestions.map((item, index) => (
+                    
+                    <div className="card" onClick={() =>{loadPrompt(item.text) }}  >
+                        <p>{item.text}</p>
+                        { item.icon }
                     </div>
-                    <div className="card">
-                        <p onClick={() => loadPrompt()}>Briefly summarize this concept: urban planning</p>
-                        <img src={assets.bulbe_icon} alt="" />
-                    </div>
-                    <div className="card">
-                        <p onClick={() => loadPrompt()}>Brainstorm team bonding activities for our work retreat</p>
-                        <img src={assets.message_icon} alt="" />
-                    </div>
-                    <div className="card">
-                        <p onClick={() => loadPrompt()}>Tell me about React js and React native</p>
-                        <img src={assets.code_icon} alt="" />
-                    </div>
-                </div>
+                       ))}
+                       
+                   </div>
                 </>
                 :<div className="result">
                          <div className="result-title">
